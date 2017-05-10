@@ -37,7 +37,6 @@ public class Enemy : MonoBehaviour
     void CalcRandomPos()
     {
         Vector2 random = Random.insideUnitCircle * radius;
-        Debug.Log(random);
        
 
         destination = position_attack.position;
