@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public Transform attack_pos1_respawn2;
     public Transform attack_po2_respawn2;
 
-    //BUnker
+    //Bunker
     public Transform bunker_position;
 
     Vector3 position_soldier;
@@ -47,7 +47,9 @@ public class GameManager : MonoBehaviour
         {
             Spwan_Character();
         }
-	}
+
+        
+    }
 
     void Choose_Respawn()
     {
@@ -72,6 +74,7 @@ public class GameManager : MonoBehaviour
         //Wich character we will chose
         int value = Random.Range(0, people.Length);
 
+        //Respawn
         Choose_Respawn();
 
         //Creatio of the new object
@@ -114,14 +117,20 @@ public class GameManager : MonoBehaviour
         if (soldier_agent.GetComponent<Hostage_Script>() != null)
         {
             Hostage_Script sold_1 = soldier_agent.GetComponent<Hostage_Script>();
-            sold_1.destination = bunker_position.position;
-
-           
+            sold_1.destination = bunker_position.position;          
         }
 
         soldiers.Add(soldier_agent);
 
         soldier_respawn = 0;
+        Debug.Log(soldiers.Count);
+    }
+
+    public void Remove_From_List(GameObject go)
+    {
+        soldiers.Remove(go);
+        Debug.Log("Remove");
+        Debug.Log(soldiers.Count);
     }
 
 }

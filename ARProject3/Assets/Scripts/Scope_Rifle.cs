@@ -13,6 +13,9 @@ public class Scope_Rifle : MonoBehaviour
     public float scopedFOV = 15f;
     private float normalFOV;
 
+    public Weapon gun;
+    private bool is_scope = false;
+
 
      // Use this for initialization
     void Start ()
@@ -23,20 +26,36 @@ public class Scope_Rifle : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-       if(Input.GetMouseButtonDown(1))
+        if (gun.is_reloading == false)
         {
-           StartCoroutine(OnScoped());
+            if (Input.GetMouseButtonDown(1))
+            {
+                StartCoroutine(OnScoped());
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                OnUnscoped();
+            }
         }
-       if(Input.GetMouseButtonUp(1))
+        else
         {
-            OnUnscoped();
+            if (is_scope)
+            {
+                is_scope = false;
+                animator.SetBool("Scoped", false);
+                scopeOverlay.SetActive(is_scope);
+                weaponCamera.SetActive(true);
+
+                mainCamera.fieldOfView = normalFOV;
+            }
         }
     }
 
     void OnUnscoped()
     {
+        is_scope = false;
         animator.SetBool("Scoped", false);
-        scopeOverlay.SetActive(false);
+        scopeOverlay.SetActive(is_scope);
         weaponCamera.SetActive(true);
 
         mainCamera.fieldOfView = normalFOV;
@@ -44,9 +63,10 @@ public class Scope_Rifle : MonoBehaviour
 
     IEnumerator OnScoped()
     {
+        is_scope = true;
         animator.SetBool("Scoped", true);
         yield return new WaitForSeconds(.15f);
-        scopeOverlay.SetActive(true);
+        scopeOverlay.SetActive(is_scope);
         weaponCamera.SetActive(false);
 
         mainCamera.fieldOfView = scopedFOV;

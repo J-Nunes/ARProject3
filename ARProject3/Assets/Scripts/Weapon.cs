@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour {
     public int maxAmmo = 10;
     private int currentAmmo;
     public float reloadTime = 1f;
-    private bool is_reloading = false;
+    public bool is_reloading = false;
 
     public Animator animator;
 
